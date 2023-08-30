@@ -22,33 +22,59 @@
         <h2>Products:</h2>
         <div class="sales_products">
             <input type="hidden" name="sales_products_count" value="2"><br>
+            <div class="single-product">
+                <label>Product Name:</label><br>
+                <input type="text" name="0-product_name" required><br>
 
-         
-            <label >Product Name:</label><br>
-            <input type="text" name="0-product_name" required><br>
+                <label>Product Price:</label><br>
+                <input type="number" name="0-product_price"  required><br>
 
-            <label >Product Price:</label><br>
-            <input type="number" name="0-product_price" step="0.01" required><br>
+                <label>Quantity:</label><br>
+                <input type="number" name="0-quantity" required><br><br>
+            </div>
+            <div class="single-product">
+                <label>Product Name:</label><br>
+                <input type="text" name="1-product_name" required><br>
 
-            <label >Quantity:</label><br>
-            <input type="number"  name="0-quantity" required><br><br>
+                <label>Product Price:</label><br>
+                <input type="number" name="1-product_price"  required><br>
 
-            <label >Product Name:</label><br>
-            <input type="text" name="1-product_name" required><br>
-
-            <label >Product Price:</label><br>
-            <input type="number" name="1-product_price" step="0.01" required><br>
-
-            <label >Quantity:</label><br>
-            <input type="number"  name="1-quantity" required><br><br>
-
-
+                <label>Quantity:</label><br>
+                <input type="number" name="1-quantity" required><br><br>
+            </div>
             
-           
-
         </div>
+        <button id="addProduct">Add Product</button><br><br>
         <input type="submit" value="Create Sale">
     </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const addButton = document.getElementById("addProduct");
+            const salesProductsDiv = document.querySelector(".sales_products");
+            const countInput = document.querySelector('input[name="sales_products_count"]');
+            let productCount = parseInt(countInput.value);
+
+            addButton.addEventListener("click", function() {
+                const newProductDiv = document.createElement("div");
+                newProductDiv.classList.add("single-product");
+                newProductDiv.innerHTML = `
+                    <label>Product Name:</label><br>
+                    <input type="text" name="${productCount}-product_name" required><br>
+
+                    <label>Product Price:</label><br>
+                    <input type="number" name="${productCount}-product_price"  required><br>
+
+                    <label>Quantity:</label><br>
+                    <input type="number" name="${productCount}-quantity" required><br><br>
+                `;
+                salesProductsDiv.appendChild(newProductDiv);
+
+                productCount++;
+                countInput.value = productCount.toString();
+            });
+        });
+    </script>
 </body>
 
 </html>
