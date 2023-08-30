@@ -18,7 +18,7 @@ from .models import Sales, SalesProduct
 def create_sale(request):
     if request.method == 'POST':
         sales_form = SalesForm(request.POST)
-        product_forms = [SalesProductForm(request.POST, prefix=str(i)) for i in range(5)]
+        product_forms = [SalesProductForm(request.POST, prefix=str(i)) for i in range(2)]
 
         if sales_form.is_valid() and all(form.is_valid() for form in product_forms):
             sale = sales_form.save()
@@ -31,7 +31,7 @@ def create_sale(request):
             return redirect('create_sale')
     else:
         sales_form = SalesForm()
-        product_forms = [SalesProductForm(prefix=str(i)) for i in range(5)]
+        product_forms = [SalesProductForm(prefix=str(i)) for i in range(2)]
 
     return render(request, 'create_sale.html', {'sales_form': sales_form, 'product_forms': product_forms})
 

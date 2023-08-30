@@ -1,21 +1,54 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Create Sale</title>
 </head>
+
 <body>
     <h1>Create Sale</h1>
     <form method="post">
         {% csrf_token %}
-        
-        {{ sales_form.as_p }}
-        
+
+        <label for="customer_name">Customer Name:</label><br>
+        <input type="text" id="customer_name" name="customer_name" required><br>
+
+        <label for="location">Location:</label><br>
+        <input type="text" id="location" name="location" required><br>
+
+        <label for="total_price">Total Price:</label><br>
+        <input type="number" id="total_price" name="total_price" step="0.01" required><br>
+
         <h2>Products:</h2>
-        {% for form in product_forms %}
-            {{ form.as_table }}
-        {% endfor %}
-        
+        <div class="sales_products">
+            <input type="hidden" name="sales_products_count" value="2"><br>
+
+         
+            <label >Product Name:</label><br>
+            <input type="text" name="0-product_name" required><br>
+
+            <label >Product Price:</label><br>
+            <input type="number" name="0-product_price" step="0.01" required><br>
+
+            <label >Quantity:</label><br>
+            <input type="number"  name="0-quantity" required><br><br>
+
+            <label >Product Name:</label><br>
+            <input type="text" name="1-product_name" required><br>
+
+            <label >Product Price:</label><br>
+            <input type="number" name="1-product_price" step="0.01" required><br>
+
+            <label >Quantity:</label><br>
+            <input type="number"  name="1-quantity" required><br><br>
+
+
+            
+           
+
+        </div>
         <input type="submit" value="Create Sale">
     </form>
 </body>
+
 </html>
