@@ -11,30 +11,27 @@ def hello_view(request):
     return render(request, 'dashboard/hello.html', {'message': message})
 
 
-
 from django.shortcuts import render, redirect
+from .forms import SalesForm, SalesProductForm
 from .models import Sales, SalesProduct
-from pprint import pp, pprint
-
-
-
 
 def create_sale(request):
     if request.method == 'POST':
-        print(request.POST)
-        customer_name = request.POST['customer_name']
-        location = request.POST['location']
-        total_price = request.POST['total_price']
-        
-        sale = Sales.objects.create(customer_name=customer_name, location=location, total_price=total_price)
-        
-        product_names = request.POST.getlist('product_name[]')
-        product_prices = request.POST.getlist('product_price[]')
-        quantities = request.POST.getlist('quantity[]')
-        
-        for name, price, quantity in zip(product_names, product_prices, quantities):
-            SalesProduct.objects.create(sales=sale, product_name=name, product_price=price, quantity=quantity)
-        
-        return redirect('create_sale')
-    
-    return render(request, 'create_sale.html')
+        sales_form = SalesForm(request.POST)
+        product_forms = [SalesProductForm(request.POST, prefix=str(i)) for i in range(5)]
+
+        if sales_form.is_valid() and all(form.is_valid() for form in product_forms):
+            sale = sales_form.save()
+
+            for form in product_forms:
+                product = form.save(commit=False)
+                product.sales = sale
+                product.save()
+
+            return redirect('create_sale')
+    else:
+        sales_form = SalesForm()
+        product_forms = [SalesProductForm(prefix=str(i)) for i in range(5)]
+
+    return render(request, 'create_sale.html', {'sales_form': sales_form, 'product_forms': product_forms})
+
