@@ -21,7 +21,7 @@ from pprint import pp, pprint
 
 def create_sale(request):
     if request.method == 'POST':
-        print(request.POST)
+
         customer_name = request.POST['customer_name']
         location = request.POST['location']
         total_price = request.POST['total_price']
