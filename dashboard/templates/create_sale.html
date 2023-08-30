@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Sale</title>
+</head>
+<body>
+    <h1>Create Sale</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="customer_name">Customer Name:</label><br>
+        <input type="text" id="customer_name" name="customer_name" required><br>
+        
+        <label for="location">Location:</label><br>
+        <input type="text" id="location" name="location" required><br>
+        
+        <label for="total_price">Total Price:</label><br>
+        <input type="number" id="total_price" name="total_price" step="0.01" required><br>
+        
+        <h2>Products:</h2>
+        {% for i in "123" %}
+            <label for="product_name">Product Name:</label><br>
+            <input type="text" id="product_name" name="product_name[]" required><br>
+            
+            <label for="product_price">Product Price:</label><br>
+            <input type="number" id="product_price" name="product_price[]" step="0.01" required><br>
+            
+            <label for="quantity">Quantity:</label><br>
+            <input type="number" id="quantity" name="quantity[]" required><br><br>
+        {% endfor %}
+
+
+
+        
+        <input type="submit" value="Create Sale">
+
+        {{  product_forms }}
+    </form>
+</body>
+</html>
